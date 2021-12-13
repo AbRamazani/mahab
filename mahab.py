@@ -41,7 +41,7 @@ try:
     if backend.view_setting()[0][4] == "yes":
         try:
             key = reg.OpenKey(reg.HKEY_CURRENT_USER , "Software\Microsoft\Windows\CurrentVersion\Run" ,0 , reg.KEY_ALL_ACCESS) # Open The Key
-            reg.SetValueEx(key ,"mahab" , 0 , reg.REG_SZ , f'"{__file__}"') # Appending Script Address
+            reg.SetValueEx(key ,"mahab" , 0 , reg.REG_SZ , f"{backend.view_setting()[0][7]}/mahab(Battery protector)/mahab.exe") # Appending Script Address
             reg.CloseKey(key) # Close The Key      
         except:
             pass
