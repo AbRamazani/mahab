@@ -1,0 +1,19 @@
+<html lang="fa">
+<head>
+    <meta charset="UTF-8">
+    <title>محاب</title>
+</head>
+<body style="background-color: #f5f7b2;font-family: vazir;" dir="rtl">
+    <img src="Completed/images/icon.png" alt="" style="display: block;margin-left: auto;margin-right: auto;clear: both">
+    <h1 style="text-align: center;">محافظ باتری محاب</h1>
+    <h3>کاربر : }</h3>
+    <h3>میزان شارژ رایانه شما از { بیشتر شده است.</h3>
+    <hr width="25%" style="margin-right: 0%;">
+    <h3>میزان شارژ باتری هنگام شروع کار : [</h3>
+    <h3>زمان شروع کار : ]</h3>
+    <h3>میزان شارژ اکنون : ,</h3>
+    <h3>زمان اکنون : ؛</h3>
+    <hr width="25%" style="margin-right: 0%;">
+    <h2>افزایش شارژ رایانه شما بر حسب دقیقه : ، درصد بر دقیقه</h2>
+</body>
+</html>
