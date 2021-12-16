@@ -1,17 +1,6 @@
 import sqlite3
-import os
 
-path = "C:/ProgramData/mahab_db"
-if not os.path.isdir(path) is True:
-    if os.path.isdir("C:/ProgramData") is True:
-        os.mkdir(path)
-    else:
-        os.mkdir("C:/ProgramData")
-        os.mkdir(path)
-
-path = f"{path}/mahab.db"
-
-def connect_user():
+def connect_user(path):
     conn = sqlite3.connect(path)
     cor = conn.cursor()
     cor.execute(
@@ -20,7 +9,7 @@ def connect_user():
     conn.commit()
     conn.close()
 
-def connect_seeting():
+def connect_seeting(path):
     conn = sqlite3.connect(path)
     cor = conn.cursor()
     cor.execute(
@@ -30,7 +19,7 @@ def connect_seeting():
     conn.close()
 
 
-def insert_user(first_name, last_name, user_name, password, image, login, count_see):
+def insert_user(first_name, last_name, user_name, password, image, login, count_see, path):
     conn = sqlite3.connect(path)
     cur = conn.cursor()
     cur.execute(
@@ -40,7 +29,7 @@ def insert_user(first_name, last_name, user_name, password, image, login, count_
     conn.close()
 
 
-def insert_setting(max_amount, min_amount, font, font_size, start_with_win, bg, fg, path_di):
+def insert_setting(max_amount, min_amount, font, font_size, start_with_win, bg, fg, path_di, path):
     conn = sqlite3.connect(path)
     cur = conn.cursor()
     cur.execute(
@@ -50,7 +39,7 @@ def insert_setting(max_amount, min_amount, font, font_size, start_with_win, bg, 
     conn.close()
 
 
-def view_user():
+def view_user(path):
     conn = sqlite3.connect(path)
     cur = conn.cursor()
     cur.execute(
@@ -62,7 +51,7 @@ def view_user():
     return info
 
 
-def view_setting():
+def view_setting(path):
     conn = sqlite3.connect(path)
     cur = conn.cursor()
     cur.execute(
@@ -74,7 +63,7 @@ def view_setting():
     return setting
 
 
-def update_user(first_name, last_name,user_name, password, image, login, count_see):
+def update_user(first_name, last_name,user_name, password, image, login, count_see, path):
     conn = sqlite3.connect(path)
     cur = conn.cursor()
     cur.execute(
@@ -84,7 +73,7 @@ def update_user(first_name, last_name,user_name, password, image, login, count_s
     conn.close()
 
 
-def update_setting(max_amount, min_amount, font, font_size, start_with_win, bg, fg):
+def update_setting(max_amount, min_amount, font, font_size, start_with_win, bg, fg, path):
     conn = sqlite3.connect(path)
     cur = conn.cursor()
     cur.execute(
@@ -94,7 +83,7 @@ def update_setting(max_amount, min_amount, font, font_size, start_with_win, bg, 
     conn.close()
 
 
-def delete():
+def delete(path):
     conn = sqlite3.connect(path)
     cur = conn.cursor()
     cur.execute(
