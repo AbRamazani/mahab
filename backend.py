@@ -13,7 +13,7 @@ def connect_seeting(path):
     conn = sqlite3.connect(path)
     cor = conn.cursor()
     cor.execute(
-        'CREATE TABLE IF NOT EXISTS setting (max_amount INTEGER , min_amount Integer , font text, font_size INTEGER ,start_with_win text, bg text, fg text, path_di text)'
+        'CREATE TABLE IF NOT EXISTS setting (max_amount INTEGER , min_amount Integer , font text, font_size INTEGER ,start_with_win text, bg text, fg text)'
     )
     conn.commit()
     conn.close()
@@ -29,11 +29,11 @@ def insert_user(first_name, last_name, user_name, password, image, login, count_
     conn.close()
 
 
-def insert_setting(max_amount, min_amount, font, font_size, start_with_win, bg, fg, path_di, path):
+def insert_setting(max_amount, min_amount, font, font_size, start_with_win, bg, fg, path):
     conn = sqlite3.connect(path)
     cur = conn.cursor()
     cur.execute(
-        "INSERT INTO setting VALUES (?, ?, ?, ?, ?, ?, ?, ?)", (max_amount, min_amount, font, font_size, start_with_win, bg, fg, path_di)
+        "INSERT INTO setting VALUES (?, ?, ?, ?, ?, ?, ?)", (max_amount, min_amount, font, font_size, start_with_win, bg, fg)
     )
     conn.commit()
     conn.close()
@@ -94,6 +94,3 @@ def delete(path):
     )
     conn.commit()
     conn.close()
-
-connect_user()
-connect_seeting()
