@@ -11,41 +11,25 @@ import psutil
 import pytz
 import os
 import backend
-import winreg as reg
+import winreg as reg     
 
-if backend.view_setting() == []:
-    pre = Tk()
-    pre.geometry("500x200+100+100")
-    pre.overrideredirect(True)
-    pre.title = "صفحه ابتدایی"
-    Label(text="مکانی که فایل های این برنامه را در آنجا نصب کرده اید را انتخاب نمایید").pack()
-    def select_di():
-        global di
-        di = filedialog.askdirectory(
-            title='انتخاب پوشه',
-            initialdir='/'
-        )
-        if di == "":
-            messagebox.showerror("خطا", "پوشه ای انتخاب نکرده اید")
-        else:
-            if os.path.isdir(f"{di}/mahab(Battery protector)/Completed") is True:
-                backend.insert_setting(90, 25, "vazir", 15, "no", "#f5f7b2", "red", di)
-                pre.destroy()
-            else:
-                messagebox.showerror("خطا", "فایل های برنامه در این پوشه قرار ندارد ")
-    Button(text="انتخاب پوشه", command=select_di).pack()
-    pre.mainloop()
+path_db = "Completed/mahab.db"
 
+backend.connect_user(path_db)
+backend.connect_seeting(path_db)
+
+if backend.view_setting(path_db) == []:
+    backend.insert_setting(90, 25, "vazir", 15, "no", "#f5f7b2", "red", path_db)
 
 try:
-    if backend.view_setting()[0][4] == "yes":
+    if backend.view_setting(path_db)[0][4] == "yes":
         try:
             key = reg.OpenKey(reg.HKEY_CURRENT_USER , "Software\Microsoft\Windows\CurrentVersion\Run" ,0 , reg.KEY_ALL_ACCESS) # Open The Key
-            reg.SetValueEx(key ,"mahab" , 0 , reg.REG_SZ , f"{backend.view_setting()[0][7]}/mahab(Battery protector)/mahab.exe") # Appending Script Address
+            reg.SetValueEx(key ,"mahab" , 0 , reg.REG_SZ , "mahab.exe") # Appending Script Address
             reg.CloseKey(key) # Close The Key      
         except:
             pass
-    elif backend.view_setting()[0][4] == "no":
+    elif backend.view_setting(path_db)[0][4] == "no":
         try:
             key = reg.OpenKey(reg.HKEY_CURRENT_USER , "Software\Microsoft\Windows\CurrentVersion\Run" ,0 , reg.KEY_ALL_ACCESS) # Open The Key
             reg.DeleteValue(key, "mahab")
@@ -59,7 +43,7 @@ except:
 
 def find_path(name_file, type_file):
     type = f"{type_file.title()}s"
-    path = f"{backend.view_setting()[0][7]}/mahab(Battery protector)/Completed/{type}/{name_file}"
+    path = f"Completed/{type}/{name_file}"
     return path
 
 #فونت ها:
@@ -73,32 +57,32 @@ except:
     pass
 
 try:
-    font = backend.view_setting()[0][2]
+    font = backend.view_setting(path_db)[0][2]
 except:
     font = "vazir"
 
 try:
-    max = backend.view_setting()[0][0]
+    max = backend.view_setting(path_db)[0][0]
 except:
     max = 90
 
 try:
-    min = backend.view_setting()[0][1]
+    min = backend.view_setting(path_db)[0][1]
 except:
     min = 25
 
 try:
-    start_with_win = backend.view_setting()[0][4]
+    start_with_win = backend.view_setting(path_db)[0][4]
 except:
     start_with_win = "no"
 
 try:
-    bg = backend.view_setting()[0][5]
+    bg = backend.view_setting(path_db)[0][5]
 except:
     bg = "#f5f7b2"
 
 try:
-    fg = backend.view_setting()[0][6]
+    fg = backend.view_setting(path_db)[0][6]
 except:
     fg="red"
 
@@ -156,25 +140,25 @@ def run():
                 out = img.resize((100,130))
                 base_name = os.path.basename(filename)
                 out.save(f"C:/ProgramData/Battery/Completed/Images/{base_name}")
-                first_name = backend.view_user()[0][0]
-                last_name = backend.view_user()[0][1]
-                user_name = backend.view_user()[0][2]
-                password = backend.view_user()[0][3]
-                backend.update_user(first_name, last_name, user_name, password, base_name, "yes", "no")
+                first_name = backend.view_user(path_db)[0][0]
+                last_name = backend.view_user(path_db)[0][1]
+                user_name = backend.view_user(path_db)[0][2]
+                password = backend.view_user(path_db)[0][3]
+                backend.update_user(first_name, last_name, user_name, password, base_name, "yes", "no", path_db)
                 exit = messagebox.showinfo("اعمال تغییرات", "!برای اعمال تغییرات باید برنامه را بسته و دوباره باز کنید\n?ادامه می دهید")
                 if exit == "ok":
                     profile_Root.destroy()
-            if backend.view_user()[0][4] == "icon":
+            if backend.view_user(path_db)[0][4] == "icon":
                 img_p = PhotoImage(file=find_path("icon_p.png", "image"))
             else:
                 try:
-                    img_p = PhotoImage(file=find_path(backend.view_user()[0][4], "image"))
+                    img_p = PhotoImage(file=find_path(backend.view_user(path_db)[0][4], "image"))
                 except:
                     img_p = PhotoImage(file=find_path("icon_p.png", "image"))
             img_profile = Button(profile_Root,image=img_p, command=select_image, width=100, height=100)
             img_profile.place(x=540,y=0)
 
-            Name = f"{backend.view_user()[0][0]} {backend.view_user()[0][1]}"
+            Name = f"{backend.view_user(path_db)[0][0]} {backend.view_user(path_db)[0][1]}"
             Show_name = Label(profile_Root,text=Name,font=(font, "15"), bg=bg, fg=fg, width=18)
             Show_name.place(x=490,y=95)
 
@@ -267,15 +251,15 @@ def run():
                 password_label = Label(change_info_Page, text=": رمز شما", font=(font, "17"), bg=bg, fg=fg, width=15).place(x=300, y=250)
 
                 name_field = Entry(change_info_Page,justify="right",font=(font, "10"),fg=fg)
-                name_field.insert(0, backend.view_user()[0][0])          
+                name_field.insert(0, backend.view_user(path_db)[0][0])          
                 name_field.place(x=220, y=110)
 
                 family_field = Entry(change_info_Page,justify="right",font=(font, "10"),fg=fg)
-                family_field.insert(0, backend.view_user()[0][1])          
+                family_field.insert(0, backend.view_user(path_db)[0][1])          
                 family_field.place(x=140, y=155)
 
                 username_field = Entry(change_info_Page,justify="left",font="andalus 10",fg=fg)
-                username_field.insert(0, backend.view_user()[0][2])          
+                username_field.insert(0, backend.view_user(path_db)[0][2])          
                 username_field.place(x=160, y=210)
 
                 password_field = Entry(change_info_Page,justify="left",fg=fg, show="*")        
@@ -302,8 +286,8 @@ def run():
                     username = username_field.get()
                     password = password_field.get()
                     if  not name == "" and not family == "" and not username == "" and not password=="":
-                        backend.update_user(name, family, username, password, "icon", "yes", "no")
-                        name = f"{backend.view_user()[0][0]} {backend.view_user()[0][1]}"
+                        backend.update_user(name, family, username, password, "icon", "yes", "no", path_db)
+                        name = f"{backend.view_user(path_db)[0][0]} {backend.view_user(path_db)[0][1]}"
                         Show_name.config(text=name)
                         profile_page()
                     else:
@@ -343,7 +327,7 @@ def run():
                 min_amount = Spinbox(battry_setting_page, from_=5, to=50, font=(font, "8"), textvariable=min_val)
                 min_amount.place(x=30, y=210)
 
-                start_with_win_quistion = StringVar(value=backend.view_setting()[0][4])
+                start_with_win_quistion = StringVar(value=backend.view_setting(path_db)[0][4])
                 start_with_win_check = Checkbutton(battry_setting_page, variable=start_with_win_quistion, onvalue="yes", offvalue="no", justify="center", bg=bg, fg=fg, )
                 start_with_win_check.place(x=50, y=260)
                 def change_seetting():
@@ -365,7 +349,7 @@ def run():
                         elif int(min_select) > 50 or int(min_select) <5:
                             messagebox.showerror("مقدار اشتباه", "برای کمترین مقدار ، اندازه اشتباهی را وارد کرده اید") 
                         else:
-                            backend.update_setting(max_select, min_select, font, 1, start_with_win_quistion.get(), bg, fg)
+                            backend.update_setting(max_select, min_select, font, 1, start_with_win_quistion.get(), bg, fg, path_db)
                             exit = messagebox.showinfo("اعمال تغییرات", "!برای اعمال تغییرات باید برنامه را بسته و دوباره باز کنید\n?ادامه می دهید")
                             if exit == "ok":
                                 profile_Root.destroy()
@@ -454,7 +438,7 @@ def run():
                             fg_color = a["fg"]
                         else:
                             fg_color = fg
-                        backend.update_setting(max, min, font_select, 1, "no", bg_color, fg_color)
+                        backend.update_setting(max, min, font_select, 1, "no", bg_color, fg_color, path_db)
                         exit = messagebox.showinfo("اعمال تغییرات", "!برای اعمال تغییرات باید برنامه را بسته و دوباره باز کنید\n?ادامه می دهید")
                         if exit == "ok":
                             profile_Root.destroy()
@@ -599,18 +583,18 @@ def run():
                 exitpage_label = Label(exit_account_page, text="خروج از حساب کاربری", font=(font, "20"), bg=bg, fg=fg).place(x=150)
 
                 def exit():
-                    first_name = backend.view_user()[0][0]
-                    last_name = backend.view_user()[0][1]
-                    user_name = backend.view_user()[0][2]
-                    password = backend.view_user()[0][3]
-                    image = backend.view_user()[0][4]
-                    backend.update_user(first_name, last_name, user_name, password, image, "no", "no")
+                    first_name = backend.view_user(path_db)[0][0]
+                    last_name = backend.view_user(path_db)[0][1]
+                    user_name = backend.view_user(path_db)[0][2]
+                    password = backend.view_user(path_db)[0][3]
+                    image = backend.view_user(path_db)[0][4]
+                    backend.update_user(first_name, last_name, user_name, password, image, "no", "no", path_db)
                     profile_Root.destroy()
                 
                 def delete():
                     ok_delete = messagebox.showwarning("حذف اطلاعات", "توجه داشته باشید با حذف حساب تمامی اطلاعات حذف خواهد شد\nادامه می دهید؟")
                     if ok_delete == "ok":
-                        backend.delete()
+                        backend.delete(path_db)
                         profile_Root.destroy()
 
                 exit_b = Button(exit_account_page, text="خروج از حساب کاربری", font=(font, "15"), bg=bg, fg=fg, command=exit).place(x=180, y=100)
@@ -694,7 +678,7 @@ def run():
             profile_Root.mainloop()
 
 # آیا ثبت نام کرده؟
-if backend.view_user() == []:
+if backend.view_user(path_db) == []:
     # پنجره اصلی
     
     start = Tk()
@@ -772,7 +756,7 @@ if backend.view_user() == []:
             password = Password_cadr.get()
             if Password_cadr.get() == Password_egain_cadr.get() and not name == "" and not family == "" and not UserName == "" and not password=="":
                 signin_page.destroy()
-                backend.insert_user(str(name), str(family), str(UserName), str(password), "icon", "yes", "no")
+                backend.insert_user(str(name), str(family), str(UserName), str(password), "icon", "yes", "no", path_db)
                 run()
             elif not Password_cadr.get() == Password_egain_cadr.get():
                 messagebox.showerror("تکرار رمز","!تکرار رمز با خود رمز یکسان نیست")
@@ -829,7 +813,7 @@ if backend.view_user() == []:
     Go.bind('<Leave>', leave)
 
     start.mainloop()
-elif backend.view_user()[0][5] == "no":
+elif backend.view_user(path_db)[0][5] == "no":
     #صفحه ثبت نام
     signin_page = Tk()
 
@@ -884,7 +868,7 @@ elif backend.view_user()[0][5] == "no":
         UserName = userName_cadr.get()
         password = Password_cadr.get()
         if Password_cadr.get() == Password_egain_cadr.get() and not UserName == "" and not password=="":
-            if backend.view_user()[0][2] == UserName and backend.view_user()[0][3] == password:
+            if backend.view_user(path_db)[0][2] == UserName and backend.view_user(path_db)[0][3] == password:
                 signin_page.destroy()
                 run()
             else:
@@ -897,7 +881,7 @@ elif backend.view_user()[0][5] == "no":
     def delete():
         ok_delete = messagebox.showwarning("حذف اطلاعات", "توجه داشته باشید با حذف حساب تمامی اطلاعات حذف خواهد شد\nادامه می دهید؟")
         if ok_delete == "ok":
-            backend.delete()
+            backend.delete(path_db)
             signin_page.destroy()
     delete = Button(signin_page,text="حذف حساب کاربری",fg="red",bg="#f5f7b2",activebackground="#f5f7b2",activeforeground="blue",font="vazir 15 bold",width=14,command=delete).pack(side='bottom')
 
@@ -913,9 +897,9 @@ elif backend.view_user()[0][5] == "no":
     see2.bind('<Leave>', dont_see_2)
 
     signin_page.mainloop()
-elif backend.view_user()[0][5] == "yes" and backend.view_setting()[0][4] == "no":
+elif backend.view_user(path_db)[0][5] == "yes" and backend.view_setting(path_db)[0][4] == "no":
     run()
-elif backend.view_user()[0][5] == "yes" and backend.view_setting()[0][4] == "yes":
+elif backend.view_user(path_db)[0][5] == "yes" and backend.view_setting(path_db)[0][4] == "yes":
     def get_time():
         tz_Tehran = pytz.timezone('Asia/Tehran')
         datetime_Tehran = datetime.now(tz_Tehran)
@@ -945,7 +929,7 @@ elif backend.view_user()[0][5] == "yes" and backend.view_setting()[0][4] == "yes
         text2 = ""
         for i in text:
             if i == "}":
-                i = backend.view_user()[0][2]
+                i = backend.view_user(path_db)[0][2]
             elif i == "{":
                 i = max
             elif i == "[":
@@ -975,7 +959,7 @@ elif backend.view_user()[0][5] == "yes" and backend.view_setting()[0][4] == "yes
         text2 = ""
         for i in text:
             if i == "}":
-                i = backend.view_user()[0][2]
+                i = backend.view_user(path_db)[0][2]
             elif i == "{":
                 i = min
             elif i == "[":
