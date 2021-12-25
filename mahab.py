@@ -140,7 +140,7 @@ def run():
                 img = Image.open(filename)
                 out = img.resize((100,130))
                 base_name = os.path.basename(filename)
-                out.save(f"C:/ProgramData/Battery/Completed/Images/{base_name}")
+                out.save(f"Completed/Images/{base_name}")
                 first_name = backend.view_user(path_db)[0][0]
                 last_name = backend.view_user(path_db)[0][1]
                 user_name = backend.view_user(path_db)[0][2]
@@ -156,7 +156,7 @@ def run():
                     img_p = PhotoImage(file=find_path(backend.view_user(path_db)[0][4], "image"))
                 except:
                     img_p = PhotoImage(file=find_path("icon_p.png", "image"))
-            img_profile = Button(profile_Root,image=img_p, command=select_image, width=100, height=100)
+            img_profile = Button(profile_Root,image=img_p, command=select_image, width=100, height=100, bd=0)
             img_profile.place(x=540,y=0)
 
             Name = f"{backend.view_user(path_db)[0][0]} {backend.view_user(path_db)[0][1]}"
