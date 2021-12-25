@@ -11,7 +11,8 @@ import psutil
 import pytz
 import os
 import backend
-import winreg as reg     
+import winreg as reg  
+import webbrowser  
 
 path_db = "Completed/mahab.db"
 
@@ -950,7 +951,8 @@ elif backend.view_user(path_db)[0][5] == "yes" and backend.view_setting(path_db)
         file = open("max.html", "w",encoding="utf-8")
         file.write(text2)
         file.close()
-        os.system('start max.html')
+        webbrowser.open(f"file://{os.getcwd()}/max.html")
+        
     
 
     def make_html_min(battery_start, time_start, battery_now, time_now, minutes_start, minutes_now):
@@ -980,7 +982,7 @@ elif backend.view_user(path_db)[0][5] == "yes" and backend.view_setting(path_db)
         file = open("min.html", "w+",encoding="utf-8")
         file.write(text2)
         file.close()
-        os.system('start min.html')
+        webbrowser.open(f"file://{os.getcwd()}/min.html")
 
 
     def start_work():
