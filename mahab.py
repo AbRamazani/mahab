@@ -1071,7 +1071,6 @@ elif backend.view_user(path_db)[0][5] == "yes" and backend.view_setting(path_db)
         for process in f.Win32_Process():
             if process.Name == "mahab.exe":
                 count += 1
-                break
         
         if count >= 2:
             messagebox.showinfo("وضعیت اجرا", "برنامه در حال اجراست\nنیاز به اجرای دوباره نمی باشد")
