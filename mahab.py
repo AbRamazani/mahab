@@ -13,6 +13,7 @@ import os
 import backend
 import winreg as reg  
 import webbrowser  
+import wmi
 
 path_db = "Completed/mahab.db"
 
@@ -1044,7 +1045,7 @@ elif backend.view_user(path_db)[0][5] == "yes" and backend.view_setting(path_db)
     battry.pack()
 
     Clock = Label(mini_page, text="", bg=bg, fg=fg, font=(font, "10"))
-    Clock.place(x=0, y=75)
+    Clock.pack()
 
     def get_battery1():
         battery = psutil.sensors_battery()
@@ -1064,10 +1065,26 @@ elif backend.view_user(path_db)[0][5] == "yes" and backend.view_setting(path_db)
 
     tick()
 
+    def running_status():
+        f = wmi.WMI()
+        count = 0
+        for process in f.Win32_Process():
+            if process.Name == "mahab.exe":
+                count += 1
+                break
+        
+        if count >= 2:
+            messagebox.showinfo("وضعیت اجرا", "برنامه در حال اجراست\nنیاز به اجرای دوباره نمی باشد")
+        else:
+            messagebox.showinfo("وضعیت اجرا", "برنامه در حال اجرا نیست\nبرای اجرا، روی آغاز کار کلیک کنید")
+
     go_to_profile = Button(mini_page, text="رفتن به پروفایل", bg=bg, fg=fg, font=(font, "10"), command=run)
-    go_to_profile.place(x=200, y=70)
+    go_to_profile.place(x=200, y=120)
 
     start = Button(mini_page, text="آغاز کار", bg=bg, fg=fg, font=(font, "10"), command=start_work)
     start.place(x=120, y=120)
+
+    run_status = Button(mini_page, text="وضعیت اجرا", bg=bg, fg=fg, font=(font, "10"), command=running_status)
+    run_status.place(x=5, y=120)
 
     mini_page.mainloop()
