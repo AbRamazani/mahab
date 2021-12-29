@@ -27,7 +27,7 @@ try:
     if backend.view_setting(path_db)[0][4] == "yes":
         try:
             key = reg.OpenKey(reg.HKEY_CURRENT_USER , "Software\Microsoft\Windows\CurrentVersion\Run" ,0 , reg.KEY_ALL_ACCESS) # Open The Key
-            reg.SetValueEx(key ,"mahab" , 0 , reg.REG_SZ , "mahab.exe") # Appending Script Address
+            reg.SetValueEx(key ,"mahab" , 0 , reg.REG_SZ , f"{os.getcwd()}\mahab.exe") # Appending Script Address
             reg.CloseKey(key) # Close The Key
         except:
             pass
