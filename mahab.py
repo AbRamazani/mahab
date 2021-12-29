@@ -11,8 +11,8 @@ import psutil
 import pytz
 import os
 import backend
-import winreg as reg  
-import webbrowser  
+import winreg as reg
+import webbrowser
 import wmi
 
 path_db = "Completed/mahab.db"
@@ -28,7 +28,7 @@ try:
         try:
             key = reg.OpenKey(reg.HKEY_CURRENT_USER , "Software\Microsoft\Windows\CurrentVersion\Run" ,0 , reg.KEY_ALL_ACCESS) # Open The Key
             reg.SetValueEx(key ,"mahab" , 0 , reg.REG_SZ , "mahab.exe") # Appending Script Address
-            reg.CloseKey(key) # Close The Key      
+            reg.CloseKey(key) # Close The Key
         except:
             pass
     elif backend.view_setting(path_db)[0][4] == "no":
@@ -40,7 +40,7 @@ try:
             pass
 except:
     pass
-        
+
 
 
 def find_path(name_file, type_file):
@@ -110,25 +110,25 @@ def run():
 
             # جداکننده بین پروفایل و عکس
             w.create_line(480, 140, 710, 140, fill="red")
-            
+
             profile_label = Label(profile_Root,text="پروفایل",font=(font, "15"), bg=bg, fg=fg, width=18)
             profile_label.place(x=490,y=150)
 
             # جداکننده بین پروفایل و تنظیمات
             w.create_line(480, 219, 710, 219, fill="red")
-            
+
             setting_label = Label(profile_Root,text="تنظیمات",font=(font, "15"), bg=bg, fg=fg, width=18)
             setting_label.place(x=490,y=230)
 
             #جداکننده بین تنظیمات و درباره ما
             w.create_line(480, 292, 710, 292, fill="red")
-            
+
             about_label = Label(profile_Root,text="درباره ما",font=(font, "15"), bg=bg, fg=fg, width=18)
             about_label.place(x=490,y=300)
 
             #جداکننده بین درباره ما و خروج
             w.create_line(480, 375, 710, 375, fill="red")
-            
+
             exit_label = Label(profile_Root,text="خروج",font=(font, "15"), bg=bg, fg=fg, width=18)
             exit_label.place(x=490,y=380)
 
@@ -177,7 +177,7 @@ def run():
 
                 Title_Battry = Label(profile_Page, text=": میزان شارژ رایانه", font=(font, "20"), bg=bg, fg=fg, width=15)
                 Title_Battry.place(x=150,y=150)
-                
+
                 To_final_label = Label(profile_Page, text=" : مانده تا پایان شارژ(ساعت)", font=(font, "20"), bg=bg, fg=fg)
                 To_final_label.place(x=150, y=220)
 
@@ -195,7 +195,7 @@ def run():
                         minutes, seconds = divmod(seconds, 60)
                         hours, minutes = divmod(minutes, 60)
                         return "%d:%02d:%02d" % (hours, minutes, seconds)
-                    
+
                     Battery_percentage = battery.percent
                     if Battery_percentage <= 30:
                         Level_Battry.config(bg="red")
@@ -233,7 +233,7 @@ def run():
                     Clock.after(1000, tick)
 
                 tick()
-            
+
             profile_page()
 
             def change_info_page():
@@ -253,18 +253,18 @@ def run():
                 password_label = Label(change_info_Page, text=": رمز شما", font=(font, "17"), bg=bg, fg=fg, width=15).place(x=300, y=250)
 
                 name_field = Entry(change_info_Page,justify="right",font=(font, "10"),fg=fg)
-                name_field.insert(0, backend.view_user(path_db)[0][0])          
+                name_field.insert(0, backend.view_user(path_db)[0][0])
                 name_field.place(x=220, y=110)
 
                 family_field = Entry(change_info_Page,justify="right",font=(font, "10"),fg=fg)
-                family_field.insert(0, backend.view_user(path_db)[0][1])          
+                family_field.insert(0, backend.view_user(path_db)[0][1])
                 family_field.place(x=140, y=155)
 
                 username_field = Entry(change_info_Page,justify="left",font="andalus 10",fg=fg)
-                username_field.insert(0, backend.view_user(path_db)[0][2])          
+                username_field.insert(0, backend.view_user(path_db)[0][2])
                 username_field.place(x=160, y=210)
 
-                password_field = Entry(change_info_Page,justify="left",fg=fg, show="*")        
+                password_field = Entry(change_info_Page,justify="left",fg=fg, show="*")
                 password_field.place(x=215, y=255)
 
                 def message():
@@ -301,7 +301,7 @@ def run():
 
             def battry_setting_page():
                 close(None)
-                # صفحه تنظیمات باتری 
+                # صفحه تنظیمات باتری
                 battry_setting_page = Frame(profile_Root, width=480, height=448, bg=bg)
                 battry_setting_page.place(x=0, y=0)
 
@@ -344,12 +344,12 @@ def run():
                     elif power_saver == "کمترین مقدار":
                         check_output("powercfg -SETACTIVE SCHEME_MAX")
 
-                    
+
                     if max_select.isnumeric() and min_select.isnumeric():
                         if int(max_select) > 100 or int(max_select) < 50:
                             messagebox.showerror("مقدار اشتباه", "برای بیشترین مقدار ، اندازه اشتباهی وارد کرده اید")
                         elif int(min_select) > 50 or int(min_select) <5:
-                            messagebox.showerror("مقدار اشتباه", "برای کمترین مقدار ، اندازه اشتباهی را وارد کرده اید") 
+                            messagebox.showerror("مقدار اشتباه", "برای کمترین مقدار ، اندازه اشتباهی را وارد کرده اید")
                         else:
                             backend.update_setting(max_select, min_select, font, 1, start_with_win_quistion.get(), bg, fg, path_db)
                             exit = messagebox.showinfo("اعمال تغییرات", "!برای اعمال تغییرات باید برنامه را بسته و دوباره باز کنید\n?ادامه می دهید")
@@ -357,9 +357,9 @@ def run():
                                 profile_Root.destroy()
                     else:
                         messagebox.showerror("مقدار اشتباه", "مقدار وارد شده شما برای بیشترین مقدار یا کمترین مقدار عدد نیست")
-                    
 
-                    
+
+
 
                 submit_setting = Button(battry_setting_page, text="ثبت", fg=fg, bg=bg, font=(font, "15"), activebackground=fg,activeforeground="blue", command=change_seetting, width=10)
                 submit_setting.place(x=150, y=320)
@@ -469,7 +469,7 @@ def run():
                 part1 = Label(help_app_page_1, text=text, font=(font, "10"), bg=bg, fg=fg, justify="center").place(y=100, x=10)
 
                 next = Button(help_app_page_1, text="بعدی »", font=(font, "12"), bg=bg, fg=fg, command=help_app_page_2)
-                next.place(x=200, y=390)           
+                next.place(x=200, y=390)
             def help_app_page_2():
                 close(None)
                 help_app_page_2 = Frame(profile_Root, width=480, height=448, bg=bg)
@@ -531,17 +531,17 @@ def run():
 
                 previous = Button(help_app_page_5, text="« قبلی", font=(font, "12"), bg=bg, fg=fg, command=help_app_page_4)
                 previous.place(x=200, y=390)
- 
+
             def about_me_page():
                 close(None)
                 about_me_page = Frame(profile_Root, width=480, height=448, bg=bg)
                 about_me_page.place(x=0, y=0)
 
                 about_label = Label(about_me_page, text="درباره سازنده نرم افزار", font=(font, "20"), bg=bg, fg=fg).place(x=150)
-                
+
                 about_file = open(find_path("about_me.txt", "text"), encoding="utf-8")
                 info = about_file.read().split("__________")[0]
-                
+
                 about_text = Label(about_me_page, text=info, font=(font, "12"), bg=bg, fg=fg, justify="center").place(y=60, x=70)
 
                 skill_label = Label(about_me_page, text="مهارت ها", font=(font, "20"), bg=bg, fg=fg).place(x=200, y=120)
@@ -576,7 +576,7 @@ def run():
                 contect_label = Label(about_me_page, text="راه های ارتباطی", font=(font, "20"), bg=bg, fg=fg).place(x=170, y=320)
 
                 contact_text = Label(about_me_page, text="شماره تماس من : ۰۹۱۵۸۸۸۹۳۵۳\nabolfazlramazani86@gmail.com : آدرس ایمیل من", font=(font, "11"), bg=bg, fg=fg, justify="center").place(y=370, x=70)
-  
+
             def exit_account_page():
                 close(None)
                 exit_account_page = Frame(profile_Root, width=480, height=448, bg=bg)
@@ -592,7 +592,7 @@ def run():
                     image = backend.view_user(path_db)[0][4]
                     backend.update_user(first_name, last_name, user_name, password, image, "no", "no", path_db)
                     profile_Root.destroy()
-                
+
                 def delete():
                     ok_delete = messagebox.showwarning("حذف اطلاعات", "توجه داشته باشید با حذف حساب تمامی اطلاعات حذف خواهد شد\nادامه می دهید؟")
                     if ok_delete == "ok":
@@ -607,7 +607,7 @@ def run():
             #دکمه پروفایل
             def open_profile(event):
                 global option_profile
-                option_profile = Frame(profile_Root, width=50, height=100)        
+                option_profile = Frame(profile_Root, width=50, height=100)
                 option_profile.place(x=365, y=115)
                 profile_root = Button(option_profile,text="پروفایل", width=15, height=2, font=(font, "10"), command=profile_page)
                 profile_root.pack()
@@ -650,7 +650,7 @@ def run():
                 exit_app = Button(option_exit,text="خروج از نرم افزار", width=16, height=1, font=(font, "10"), command=profile_Root.destroy)
                 exit_app.pack()
 
-            
+
             exit_label.bind("<ButtonPress-1>", open_exit)
 
             #تابع بستن گزینه ها
@@ -668,7 +668,7 @@ def run():
                 try :
                     option_about.destroy()
                 except:
-                    pass 
+                    pass
 
                 try:
                     option_exit.destroy()
@@ -682,7 +682,7 @@ def run():
 # آیا ثبت نام کرده؟
 if backend.view_user(path_db) == []:
     # پنجره اصلی
-    
+
     start = Tk()
 
     #صفحه ثبت نام
@@ -953,8 +953,8 @@ elif backend.view_user(path_db)[0][5] == "yes" and backend.view_setting(path_db)
         file.write(text2)
         file.close()
         webbrowser.open(f"file://{os.getcwd()}/max.html")
-        
-    
+
+
 
     def make_html_min(battery_start, time_start, battery_now, time_now, minutes_start, minutes_now):
         file = open(find_path("main_html_min.txt", "text"), "r",encoding="utf-8")
@@ -1006,6 +1006,8 @@ elif backend.view_user(path_db)[0][5] == "yes" and backend.view_setting(path_db)
                     battery_start = get_battery()
                     is_first_max = False
                     is_first_min = True
+                    beeb_max = False
+                    beeb_min = False
                 if Battery_percentage >= max and beeb_max is False:
                     for i in range(1, 4):
                         Beep(1000, 500)
@@ -1021,6 +1023,8 @@ elif backend.view_user(path_db)[0][5] == "yes" and backend.view_setting(path_db)
                     battery_start = get_battery()
                     is_first_max = True
                     is_first_min = False
+                    beeb_max = False
+                    beeb_min = False
                 if Battery_percentage <= min and beeb_min is False:
                     for i in range(1, 4):
                         Beep(1000, 500)
@@ -1053,7 +1057,7 @@ elif backend.view_user(path_db)[0][5] == "yes" and backend.view_setting(path_db)
         text = f"{Battery_percentage}%"
         battry.config(text=text)
         battry.after(5, get_battery1)
-    
+
     get_battery1()
 
     def tick():
@@ -1071,7 +1075,7 @@ elif backend.view_user(path_db)[0][5] == "yes" and backend.view_setting(path_db)
         for process in f.Win32_Process():
             if process.Name == "mahab.exe":
                 count += 1
-        
+
         if count >= 2:
             messagebox.showinfo("وضعیت اجرا", "برنامه در حال اجراست\nنیاز به اجرای دوباره نمی باشد")
         else:
