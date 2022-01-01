@@ -872,6 +872,12 @@ elif backend.view_user(path_db)[0][5] == "no":
         if Password_cadr.get() == Password_egain_cadr.get() and not UserName == "" and not password=="":
             if backend.view_user(path_db)[0][2] == UserName and backend.view_user(path_db)[0][3] == password:
                 signin_page.destroy()
+                first_name = backend.view_user(path_db)[0][0]
+                last_name = backend.view_user(path_db)[0][1]
+                user_name = backend.view_user(path_db)[0][2]
+                password = backend.view_user(path_db)[0][3]
+                icon = backend.view_user(path_db)[0][4]
+                backend.update_user(first_name, last_name, user_name, password, icon, "yes", "no", path_db)
                 run()
             else:
                 messagebox.showerror("کاربر","!کاربری با این اطلاعات یافت نشد")
