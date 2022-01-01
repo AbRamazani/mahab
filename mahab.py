@@ -594,8 +594,8 @@ def run():
                     profile_Root.destroy()
 
                 def delete():
-                    ok_delete = messagebox.showwarning("حذف اطلاعات", "توجه داشته باشید با حذف حساب تمامی اطلاعات حذف خواهد شد\nادامه می دهید؟")
-                    if ok_delete == "ok":
+                    ok_delete = messagebox.askquestion("حذف اطلاعات", "توجه داشته باشید با حذف حساب تمامی اطلاعات حذف خواهد شد\nادامه می دهید؟")
+                    if ok_delete == "yes":
                         backend.delete(path_db)
                         profile_Root.destroy()
 
@@ -881,8 +881,8 @@ elif backend.view_user(path_db)[0][5] == "no":
             messagebox.showerror("کامل نکردن مشخصات","!شما یکی از قسمت ها را کامل نکرده اید")
     Regester = Button(signin_page,text="ورود",fg="red",bg="#f5f7b2",activebackground="#f5f7b2",activeforeground="blue",font="vazir 15 bold",width=10,command=register).pack(side='bottom',pady=20)
     def delete():
-        ok_delete = messagebox.showwarning("حذف اطلاعات", "توجه داشته باشید با حذف حساب تمامی اطلاعات حذف خواهد شد\nادامه می دهید؟")
-        if ok_delete == "ok":
+        ok_delete = messagebox.askquestion("حذف اطلاعات", "توجه داشته باشید با حذف حساب تمامی اطلاعات حذف خواهد شد\nادامه می دهید؟")
+        if ok_delete == "yes":
             backend.delete(path_db)
             signin_page.destroy()
     delete = Button(signin_page,text="حذف حساب کاربری",fg="red",bg="#f5f7b2",activebackground="#f5f7b2",activeforeground="blue",font="vazir 15 bold",width=14,command=delete).pack(side='bottom')
