@@ -792,7 +792,7 @@ if backend.view_user(path_db) == []:
 
     icon = PhotoImage(file=find_path("icon.png", "image"))
 
-    icontext = Label(start, image=icon).pack()
+    icontext = Label(start, image=icon, bg="#f5f7b2").pack()
 
     Hi = Label(start, text="! سلام \nبه نرم افزار محافظ باتری خوش آمدید", fg="red", bg="#f5f7b2",
                font="vazir 16").pack()
