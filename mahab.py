@@ -1082,7 +1082,7 @@ elif backend.view_user(path_db)[0][5] == "yes" and backend.view_setting(path_db)
             if process.Name == "mahab.exe":
                 count += 1
 
-        if count >= 2:
+        if count >= 3:
             messagebox.showinfo("وضعیت اجرا", "برنامه در حال اجراست\nنیاز به اجرای دوباره نمی باشد")
         else:
             messagebox.showinfo("وضعیت اجرا", "برنامه در حال اجرا نیست\nبرای اجرا، روی آغاز کار کلیک کنید")
