@@ -956,7 +956,8 @@ elif backend.view_user(path_db)[0][5] == "yes" and backend.view_setting(path_db)
             elif i == "|":
                 i = bg
             elif i == "+":
-                i = f"url('../Fonts/{font.title()}.ttf') format('truetype')"
+                # i = f"url('Completed/Fonts/{font.title()}.ttf') format('truetype')"
+                i = "vazir"
             elif i == "*":
                 i = fg
             text2 += str(i)
@@ -993,7 +994,8 @@ elif backend.view_user(path_db)[0][5] == "yes" and backend.view_setting(path_db)
             elif i == "|":
                 i = bg
             elif i == "+":
-                i = f"url('../Fonts/{font.title()}.ttf') format('truetype')"
+                # i = f"url('Completed/Fonts/{font.title()}.ttf') format('truetype')"
+                i = "vazir"
             elif i == "*":
                 i = fg
             text2 += str(i)
