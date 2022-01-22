@@ -3,7 +3,7 @@
     <meta charset="UTF-8">
     <title>محاب</title>
 </head>
-<body style="background-color: #f5f7b2;font-family: vazir;" dir="rtl">
+<body style="background-color: |;font-family: +;color: *" dir="rtl">
     <img src="Completed/images/icon.png" alt="" style="display: block;margin-left: auto;margin-right: auto;clear: both">
     <h1 style="text-align: center;">محافظ باتری محاب</h1>
     <h3>کاربر : }</h3>

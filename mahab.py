@@ -953,6 +953,12 @@ elif backend.view_user(path_db)[0][5] == "yes" and backend.view_setting(path_db)
                 in_time = minutes_now - minutes_start
                 avg = battery_add / in_time
                 i = str(avg)
+            elif i == "|":
+                i = bg
+            elif i == "+":
+                i = f"url('../Fonts/{font.title()}.ttf') format('truetype')"
+            elif i == "*":
+                i = fg
             text2 += str(i)
         file.close()
         file = open("max.html", "w",encoding="utf-8")
@@ -984,6 +990,12 @@ elif backend.view_user(path_db)[0][5] == "yes" and backend.view_setting(path_db)
                 in_time = minutes_start - minutes_now
                 avg = battery_sub / in_time
                 i = str(avg)
+            elif i == "|":
+                i = bg
+            elif i == "+":
+                i = f"url('../Fonts/{font.title()}.ttf') format('truetype')"
+            elif i == "*":
+                i = fg
             text2 += str(i)
         file.close()
         file = open("min.html", "w+",encoding="utf-8")
