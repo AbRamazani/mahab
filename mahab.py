@@ -956,8 +956,18 @@ elif backend.view_user(path_db)[0][5] == "yes" and backend.view_setting(path_db)
             elif i == "|":
                 i = bg
             elif i == "+":
-                # i = f"url('Completed/Fonts/{font.title()}.ttf') format('truetype')"
-                i = "vazir"
+                mo = "{"
+                mc = "}"
+                font_t = font
+                if font_t == "IRAban":
+                    font_t = "aban"
+                elif font_t == "B Mitra":
+                    font_t = "mitra"
+                elif font_t == "B Titr":
+                    font_t = "titr"
+                elif font_t == "B Yekan":
+                    font_t = "yekan"
+                i = f"@font-face {mo}font-family: 'font';src: url('Completed/Fonts/{font_t.title()}.ttf') format('truetype'){mc}"
             elif i == "*":
                 i = fg
             text2 += str(i)
@@ -994,8 +1004,18 @@ elif backend.view_user(path_db)[0][5] == "yes" and backend.view_setting(path_db)
             elif i == "|":
                 i = bg
             elif i == "+":
-                # i = f"url('Completed/Fonts/{font.title()}.ttf') format('truetype')"
-                i = "vazir"
+                mo = "{"
+                mc = "}"
+                font_t = font
+                if font_t == "IRAban":
+                    font_t = "aban"
+                elif font_t == "B Mitra":
+                    font_t = "mitra"
+                elif font_t == "B Titr":
+                    font_t = "titr"
+                elif font_t == "B Yekan":
+                    font_t = "yekan"
+                i = f"@font-face {mo}font-family: 'font';src: url('Completed/Fonts/{font_t.title()}.ttf') format('truetype'){mc}"
             elif i == "*":
                 i = fg
             text2 += str(i)

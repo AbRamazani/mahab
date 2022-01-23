@@ -1,9 +1,14 @@
+<!DOCTYPE html>
 <html lang="fa">
 <head>
+    <link href="Completed/images/icon.png" rel="shortcut icon">
     <meta charset="UTF-8">
     <title>محاب</title>
+    <style>
+        +
+    </style>
 </head>
-<body style="background-color: |;font-family: +;color: *" dir="rtl">
+<body style="background-color: |;font-family: font;color: *" dir="rtl">
     <img src="Completed/images/icon.png" alt="" style="display: block;margin-left: auto;margin-right: auto;clear: both">
     <h1 style="text-align: center;">محافظ باتری محاب</h1>
     <h3>کاربر : }</h3>
