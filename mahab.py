@@ -391,7 +391,13 @@ def run():
 
                 fg_label = Label(appr_setting_page, text=": رنگ متون", font=(font, "17"), bg=bg, fg=fg).place(x=345, y=200)
 
-                Font = StringVar()
+                if font == "vazir":font_p="وزیر(پیشفرض)"
+                if font == "IRAban":font_p="آبان"
+                if font == "B Mitra":font_p="میترا"
+                if font == "B Titr":font_p="تیتر"
+                if font == "B Yekan":font_p="یکان"
+
+                Font = StringVar(value=font_p)
                 Fonts = ttk.Combobox(appr_setting_page, textvariable=Font,
                                     values=("وزیر(پیشفرض)", "آبان", "میترا", "تیتر", "یکان"),
                                     state='readonly', justify="center", font=(font, "8"))
@@ -407,9 +413,13 @@ def run():
                     else:
                         bg_color = bg_color[1]
                         a.config(bg=bg_color, text="yes")
+                        show_bg.config(bg=bg_color)
 
                 bg_button = Button(appr_setting_page, text="انتخاب رنگ", fg=fg, bg=bg, font=(font, "10"), activebackground=bg,activeforeground="blue", command=bg_select_color)
                 bg_button.place(x=200, y=160, height=25)
+                
+                show_bg = Label(appr_setting_page, bg=bg, borderwidth=2, relief="solid")
+                show_bg.place(x=170, y=160, height=25, width=20)
 
                 def fg_select_color():
                     fg_color = askcolor(color=fg, title="انتخاب رنگ متون")
@@ -419,10 +429,14 @@ def run():
                     else:
                         fg_color = fg_color[1]
                         a.config(fg=fg_color, font="b")
+                        show_fg.config(bg=fg_color)
 
 
                 fg_button = Button(appr_setting_page, text="انتخاب رنگ", fg=fg, bg=bg, font=(font, "10"), activebackground=bg,activeforeground="blue", command=fg_select_color)
                 fg_button.place(x=250, y=210, height=25)
+                
+                show_fg = Label(appr_setting_page, bg=fg, borderwidth=2, relief="solid")
+                show_fg.place(x=220, y=210, height=25, width=20)
 
                 def change_appr():
                     font_select = Font.get()
@@ -440,7 +454,7 @@ def run():
                             fg_color = a["fg"]
                         else:
                             fg_color = fg
-                        backend.update_setting(max, min, font_select, 1, "no", bg_color, fg_color, path_db)
+                        backend.update_setting(max, min, font_select, 1, start_with_win, bg_color, fg_color, path_db)
                         exit = messagebox.showinfo("اعمال تغییرات", "!برای اعمال تغییرات باید برنامه را بسته و دوباره باز کنید\n?ادامه می دهید")
                         if exit == "ok":
                             profile_Root.destroy()
