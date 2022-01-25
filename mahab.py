@@ -270,7 +270,7 @@ def run():
                 def message():
                     messagebox.showinfo("دکمه دیدن رمز","!لطفا برای دیدن رمز ماوس خود را روی دکمه قرار دهید")
 
-                see1 = Button(change_info_Page,text="دیدن", font="vazir 7",command=message)
+                see1 = Button(change_info_Page,text="دیدن", font=f"{font} 7",command=message, bg=bg, fg=fg)
                 see1.place(y=255,x=185)
 
                 def see_1(event):
